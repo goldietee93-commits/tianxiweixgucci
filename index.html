@@ -38,7 +38,7 @@
 
   /* Hero */
   .hero{position:relative; background:linear-gradient(160deg,var(--wood) 0%,var(--wood-deep) 100%); overflow:hidden; min-height:360px;}
-  .hero img{width:100%; display:block; height:420px; object-fit:cover; object-position:50% 18%;}
+  .hero img{width:100%; display:block; height:420px; object-fit:cover; object-position:50% 4%;}
   .hero-scrim{position:absolute; inset:0; background:linear-gradient(180deg, rgba(29,20,16,0) 0%, rgba(29,20,16,.1) 45%, rgba(29,20,16,.9) 100%);}
   .hero-content{position:absolute; left:0; right:0; bottom:0; padding:20px 24px 22px;}
   .hero-eyebrow{color:#e3cf9f; font-size:12px; letter-spacing:.08em; margin:0 0 8px; font-weight:600;}
@@ -175,24 +175,25 @@
     main: "https://docs.google.com/spreadsheets/d/e/2PACX-1vS2ZHnKEwdJiuBM_ofh_jPGZ6ZqGLOIx5YVmKPrlFh7LWkRn_SXjoEITcHdJQHkdPRQHAQFviFD3VOl/pub?gid=481743471&single=true&output=csv"    // Main Show 9月25日 的表
   };
 
-  // ④ 各阶段默认 Hashtag（表格有 hashtags 栏就用那一栏，没有就用这里的）
+  // ④ Hashtag 设定（优先顺序：表格 hashtags 栏 → 阶段+平台 → 阶段的 _all）
+  //    平台代码：IG X TT FB YT WB DY TH XHS
+  //    想让某平台用不同的 tag，就在该阶段里加一行，例如：
+  //      WB: "#田曦薇#\n#GUCCI#",
   var DEFAULT_HASHTAGS = {
-    pre:  "#TianXiweiGucciSS27APTLook\n#GucciTheStoreShow\n#GucciSS27xTianXiwei\n#TianXiwei #Gucci @gucci",
-    main: "#GucciTheStoreShow\n#GucciSS27xTianXiwei #TianXiwei\n#Gucci @gucci"
+    pre: {
+      _all: "#TianXiweiGucciSS27APTLook\n#GucciTheStoreShow\n#GucciSS27xTianXiwei\n#TianXiwei #Gucci @gucci",   // X、TikTok 等
+      IG:   "#TianXiweiGucciSS27APTLook\n#GucciTheStoreShow\n#GucciSS27xTianXiwei\n#TianXiwei #Gucci\n@gucci @vv.tian",
+      XHS: "", WB: "", TH: ""   // 空白 = 不显示 hashtag
+    },
+    main: {
+      _all: "#GucciTheStoreShow\n#GucciSS27xTianXiwei #TianXiwei\n#Gucci @gucci",   // X、TikTok 等
+      IG:   "#GucciTheStoreShow\n#GucciSS27xTianXiwei #TianXiwei\n#Gucci\n@gucci @vv.tian",
+      XHS: "", WB: "", TH: ""   // 空白 = 不显示 hashtag
+    }
   };
 
-  // ⑤ 随机文案（中文界面抽中文，EN 界面抽英文，可自行增减）
+  // ⑤ 随机文案（一律英文，中文 / EN 界面都抽这里，可自行增减）
   var CAPTIONS = {
-    zh:[
-      "田曦薇把 GUCCI 穿出了自己的味道，温柔里带着一点酷 ✨",
-      "米兰的风都变得好看了，因为田曦薇在这里 🤎",
-      "每一次造型都是惊喜，田曦薇真的太会穿了！",
-      "复古又时髦，这就是田曦薇 × GUCCI 的魅力 🐎",
-      "看到田曦薇的米兰造型，今天的心情直接变好 ☀️",
-      "从容自在又闪闪发光，田曦薇就是最亮的那一个 ✨",
-      "田曦薇的气质和 GUCCI 真的太搭了，期待更多！",
-      "一路支持田曦薇，米兰时装周冲呀 💪🤎"
-    ],
     en:[
       "Tian Xiwei makes every GUCCI look feel effortless and fresh ✨",
       "Milan looks even better with Tian Xiwei in it 🤎",
@@ -201,7 +202,67 @@
       "Soft, confident, and totally herself. That's Tian Xiwei ✨",
       "Can't stop looking at Tian Xiwei's Milan style — so elegant!",
       "Tian Xiwei brings such warmth to GUCCI, loving every moment 🤎",
-      "So proud of Tian Xiwei at Milan Fashion Week! 💪"
+      "So proud of Tian Xiwei at Milan Fashion Week! 💪",
+      "Tian Xiwei walked into Milan and the whole city lit up ✨",
+      "That calm elegance? Only Tian Xiwei can pull it off 🤎",
+      "Tian Xiwei x GUCCI — vintage charm meets youthful glow 🐎",
+      "Another day of being speechless over Tian Xiwei",
+      "Such a refined look — Tian Xiwei's style keeps evolving",
+      "Milan in autumn feels softer with Tian Xiwei around 🍂",
+      "One smile from Tian Xiwei and the whole venue melted ☺️",
+      "I could stare at this look all day. Tian Xiwei nailed it!",
+      "When it comes to presence, Tian Xiwei never disappoints ✨",
+      "Polished from head to toe — Tian Xiwei is fashion itself",
+      "Every glance from Tian Xiwei tells a story 👀",
+      "GUCCI classics plus Tian Xiwei's spark = perfection 🤎",
+      "Never seen anyone suit GUCCI quite like Tian Xiwei!",
+      "My pick for the star of Milan Fashion Week: Tian Xiwei ✨",
+      "Gentle yet powerful — Tian Xiwei's look this time 💪",
+      "Saving every single photo of Tian Xiwei 📸",
+      "Any style, any mood — Tian Xiwei makes it work",
+      "Tian Xiwei just looks up and it's an editorial shot 🎞️",
+      "Tian Xiwei today: effortlessly luxe 🤎",
+      "The brightest view in Milan? Tian Xiwei ✨",
+      "Tian Xiwei x GUCCI — falling for it all over again 💓",
+      "That relaxed confidence is everything. Go Tian Xiwei!",
+      "Tian Xiwei just standing there is pure elegance ✨",
+      "Always excited for Tian Xiwei's next look, and she delivered again 🎁",
+      "Tian Xiwei's fashion game gets stronger every time",
+      "Warm brown tones were made for Tian Xiwei 🍂",
+      "Tian Xiwei gives classic pieces a fresh new story 🐎",
+      "The whole world should see Tian Xiwei today 🌍",
+      "The kind of beauty that gets better every time you look — Tian Xiwei ✨",
+      "Tian Xiwei's Milan look just made my whole day 🔋",
+      "Elegance runs in Tian Xiwei's veins 🤎",
+      "Pretty sure Milan's lights were shining just for Tian Xiwei 💡",
+      "Every detail of Tian Xiwei's look is so thoughtful ✨",
+      "Tian Xiwei's fashion report card: 100/100 💯",
+      "One soft, one iconic — Tian Xiwei and GUCCI just fit!",
+      "Tian Xiwei is shining bright in Milan ✨",
+      "Checking in to appreciate Tian Xiwei today 📍",
+      "Tian Xiwei turns the GUCCI story into her own 🤎",
+      "Put these photos straight into the fashion textbook 📚",
+      "Every appearance by Tian Xiwei deserves to be remembered ✨",
+      "Quiet aura, impossible to look away — that's Tian Xiwei 👀",
+      "Love Tian Xiwei's understated kind of luxury 🤎",
+      "What a beautiful Milan chapter for Tian Xiwei 🏆",
+      "Tian Xiwei's style is going global 🌍",
+      "Proud to watch Tian Xiwei step onto bigger stages ✨",
+      "Can we talk about Tian Xiwei's hair today? 💇‍♀️",
+      "Tian Xiwei x GUCCI — a pairing I'll always support 🤎",
+      "Seeing Tian Xiwei so confident in Milan makes me so proud 🥹",
+      "The moment Tian Xiwei appeared, every camera turned 📸",
+      "Thank you, Tian Xiwei, for all this beauty ✨",
+      "There are stars in Tian Xiwei's eyes ⭐",
+      "Classic and fresh, perfectly balanced by Tian Xiwei 🤎",
+      "Tian Xiwei is the softest color in Milan 🎨",
+      "Every look feels tailor-made for Tian Xiwei ✂️",
+      "Tian Xiwei x GUCCI SS27 — can't wait for more!",
+      "Tian Xiwei at the show had my heart racing 💓",
+      "Of course it's Tian Xiwei — style on point ✨",
+      "A kind of beauty you remember for a long time — Tian Xiwei 🤎",
+      "Cheering loud for Tian Xiwei's Milan journey 📣",
+      "Tian Xiwei, you look absolutely stunning today! ✨"
     ]
   };
 
@@ -256,9 +317,9 @@
       phaseAll:"全部", phaseAllSub:"整个企划", live:"进行中",
       goEngage:"前往互动",
       hashtags:"HASHTAGS", copyTags:"复制 Hashtag", randCap:"随机文案", randomize:"换一则", copyMsg:"复制文案",
-      copyAll:"复制文案 + Hashtag", goPost:"🚀 去发文！", markDoneBtn:"✓ 标记完成", undoDone:"↺ 取消完成",
+      copyAll:"复制文案 + Hashtag", goPost:"🍩 去发文！", markDoneBtn:"✓ 标记完成", undoDone:"↺ 取消完成",
       copied:"已复制 ✓", copyFail:"复制失败，请长按手动复制",
-      tips:"📝 复制文案 → 贴在留言区（别忘了按赞 ❤️）<br>📸 文案 + # → 发贴文 / Reels（分享并收藏 ✨）<br>#️⃣ 只复制 # → 贴在限动（效果更好 🚀）",
+      tips:"❤️ 按赞、转发和收藏<br>📝 复制文案 → 贴在留言区，并 tag @gucci @vv.tian<br>📸 文案 + # → 发贴文 / Reels（分享并收藏 ✨）<br>#️⃣ 只复制 # → 贴在限动（效果更好 🍩）",
       markDone:"标记我已完成",
       emptyView:"这个阶段还没有任务，请稍候管理员更新。",
       noSheet:"任务表还没连接，管理员设置好后这里会显示任务。",
@@ -271,9 +332,9 @@
       phaseAll:"All", phaseAllSub:"Whole campaign", live:"Live now",
       goEngage:"Engage",
       hashtags:"HASHTAGS", copyTags:"Copy Hashtags", randCap:"Random Caption", randomize:"Randomize", copyMsg:"Copy Message",
-      copyAll:"Copy Message + Hashtags", goPost:"🚀 Go post!", markDoneBtn:"✓ Mark Done", undoDone:"↺ Undo",
+      copyAll:"Copy Message + Hashtags", goPost:"🍩 Go post!", markDoneBtn:"✓ Mark Done", undoDone:"↺ Undo",
       copied:"Copied ✓", copyFail:"Copy failed, long-press to copy",
-      tips:"📝 Copy message → paste as a comment (don't forget to like ❤️)<br>📸 Message + # → create a Post / Reels (share and save ✨)<br>#️⃣ Copy # only → paste in Stories (more impact 🚀)",
+      tips:"❤️ Like, Repost & Bookmarks<br>📝 Copy message → paste as a comment with @gucci @vv.tian<br>📸 Message + # → create a Post / Reels (share and save ✨)<br>#️⃣ Copy # only → paste in Stories (more impact 🍩)",
       markDone:"Mark as done",
       emptyView:"No tasks for this phase yet. Check back soon.",
       noSheet:"The task sheet isn't connected yet. Tasks will appear here once it is.",
@@ -531,12 +592,14 @@
   var sheetKey = null, curCaption = "";
   function findPost(key){ for(var i=0;i<posts.length;i++){ if(postKey(posts[i])===key) return posts[i]; } return null; }
   function pickCaption(){
-    var list = CAPTIONS[lang] || CAPTIONS.zh;
+    var list = CAPTIONS.en;
     if(list.length < 2) return list[0] || "";
     var c; do { c = list[Math.floor(Math.random()*list.length)]; } while(c === curCaption);
     return c;
   }
-  function tagsOf(p){ return (p.hashtags || DEFAULT_HASHTAGS[p.phase] || DEFAULT_HASHTAGS.main).replace(/\\n/g,"\n"); }
+  function tagsOf(p){ var ph = DEFAULT_HASHTAGS[p.phase] || DEFAULT_HASHTAGS.main;
+    var v = p.hashtags ? p.hashtags : (Object.prototype.hasOwnProperty.call(ph, p.platform) ? ph[p.platform] : ph._all);
+    return (v || "").replace(/\\n/g,"\n"); }
   function openSheet(key){
     sheetKey = key; curCaption = "";
     document.getElementById("sheetBg").classList.add("open");
@@ -566,11 +629,11 @@
         (p.pinned?'<span class="pin-mark">📌</span>':'')+(p.favorite?'<span class="pin-mark">⭐️</span>':'')+
         '<button class="sheet-x" id="btnClose" aria-label="close">✕</button></div>'+
       (p.note?'<p class="post-note" style="margin:0 2px 12px">'+escapeHtml(p.note)+'</p>':'')+
-      '<div class="box"><div class="box-head"><span class="box-label">'+t("hashtags")+'</span>'+
+      (tags ? '<div class="box"><div class="box-head"><span class="box-label">'+t("hashtags")+'</span>'+
         '<button class="mini" id="btnCopyTags">⧉ '+t("copyTags")+'</button></div>'+
-        '<div class="tags">'+escapeHtml(tags)+'</div></div>'+
+        '<div class="tags">'+escapeHtml(tags)+'</div></div>' : '')+
       '<div class="box">'+capHtml+'</div>'+
-      (curCaption?'<button class="copy-all" id="btnCopyAll">⧉ '+t("copyAll")+'</button>':'')+
+      (curCaption && tags?'<button class="copy-all" id="btnCopyAll">⧉ '+t("copyAll")+'</button>':'')+
       '<div class="sheet-actions">'+
         '<a class="go-post" href="'+escapeHtml(p.link)+'" target="_blank" rel="noopener">'+t("goPost")+'</a>'+
         '<button class="mark-done'+(mine?" is-done":"")+'" id="btnDone">'+(mine?t("undoDone"):t("markDoneBtn"))+'</button>'+
@@ -579,7 +642,7 @@
 
     document.getElementById("btnClose").onclick = closeSheet;
     document.getElementById("btnRand").onclick = function(){ curCaption = pickCaption(); renderSheet(); };
-    document.getElementById("btnCopyTags").onclick = function(){ copyText(tags); };
+    var ct = document.getElementById("btnCopyTags"); if(ct) ct.onclick = function(){ copyText(tags); };
     var c1 = document.getElementById("btnCopyCap"); if(c1) c1.onclick = function(){ copyText(curCaption); };
     var c2 = document.getElementById("btnCopyAll"); if(c2) c2.onclick = function(){ copyText(curCaption+"\n\n"+tags); };
     document.getElementById("btnDone").onclick = function(){
