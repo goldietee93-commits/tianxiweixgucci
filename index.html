@@ -196,8 +196,11 @@
     }
   };
 
+  // ⑦ 留言提示要 tag 的帐号（空白 = 不用 tag）
+  var COMMENT_TAGS = { _all:"@gucci", IG:"@gucci @vv.tian", WB:"", XHS:"" };
+
   // ⑥ 这些平台不显示随机文案
-  var NO_CAPTION_PLATFORMS = ["XHS", "WB", "TH"];
+  var NO_CAPTION_PLATFORMS = [];   // 例如 ["XHS", "WB", "TH"]
 
   // ⑤ 随机文案（一律英文，中文 / EN 界面都抽这里，可自行增减）
   var CAPTIONS = {
@@ -326,7 +329,7 @@
       hashtags:"HASHTAGS", copyTags:"复制 Hashtag", randCap:"随机文案", randomize:"换一则", copyMsg:"复制文案",
       copyAll:"复制文案 + Hashtag", goPost:"🍩 去发文！", markDoneBtn:"✓ 完成", undoDone:"↺ 取消完成",
       copied:"已复制 ✓", copyFail:"复制失败，请长按手动复制",
-      tips:"❤️ 按赞、转发和收藏<br>📝 复制文案 → 贴在留言区，并 tag @gucci @vv.tian<br>📱 文案 + # → 发贴文 / Reels（分享并收藏 ✨）<br>#️⃣ 只复制 # → 贴在限动（效果更好）",
+      tips:"❤️ 按赞、转发和收藏<br>📝 复制文案 → 贴在留言区{TAG}<br>📱 文案 + # → 发贴文 / Reels（分享并收藏 ✨）<br>#️⃣ 只复制 # → 贴在限动（效果更好）",
       markDone:"标记我已完成",
       emptyView:"这个阶段还没有任务，请稍候管理员更新。",
       noSheet:"任务表还没连接，管理员设置好后这里会显示任务。",
@@ -341,7 +344,7 @@
       hashtags:"HASHTAGS", copyTags:"Copy Hashtags", randCap:"Random Caption", randomize:"Randomize", copyMsg:"Copy Message",
       copyAll:"Copy Message + Hashtags", goPost:"🍩 Go post!", markDoneBtn:"✓ Done", undoDone:"↺ Undo",
       copied:"Copied ✓", copyFail:"Copy failed, long-press to copy",
-      tips:"❤️ Like, Repost & Save<br>📝 Copy message → paste as a comment with @gucci @vv.tian<br>📱 Message + # → create a Post / Reels (share and save ✨)<br>#️⃣ Copy # only → paste in Stories (more impact)",
+      tips:"❤️ Like, Repost & Save<br>📝 Copy message → paste as a comment{TAG}<br>📱 Message + # → create a Post / Reels (share and save ✨)<br>#️⃣ Copy # only → paste in Stories (more impact)",
       markDone:"Mark as done",
       emptyView:"No tasks for this phase yet. Check back soon.",
       noSheet:"The task sheet isn't connected yet. Tasks will appear here once it is.",
@@ -630,7 +633,9 @@
     var tags = tagsOf(p);
     var showCap = NO_CAPTION_PLATFORMS.indexOf(p.platform) < 0;
     if(!showCap) curCaption = "";
-    var tipsHtml = (showCap || tags) ? t("tips") : t("tips").split("<br>")[0];
+    var ctag = Object.prototype.hasOwnProperty.call(COMMENT_TAGS, p.platform) ? COMMENT_TAGS[p.platform] : COMMENT_TAGS._all;
+    var tipLines = t("tips").replace("{TAG}", ctag ? (lang==="zh" ? "，并 tag "+ctag : " with "+ctag) : "").split("<br>");
+    var tipsHtml = tags ? tipLines.join("<br>") : tipLines.slice(0, showCap ? 2 : 1).join("<br>");
     var capHtml = curCaption
       ? '<div class="box-head"><span class="box-label">'+t("randCap")+'</span>'+
           '<button class="mini" id="btnRand">↻ '+t("randomize")+'</button>'+
